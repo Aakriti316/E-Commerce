@@ -19,16 +19,16 @@ import java.time.Instant;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name = "PRODUCT_ID")
-    private long productId;
+    private Long productId;
 
     @Column(name = "QUANTITY")
-    private long quantity;
+    private Long quantity;
 
     @Column(name = "AMOUNT")
-    private long amount;
+    private Long amount;
 
     @Column(name = "ORDER_STATUS")
     private String orderStatus;
