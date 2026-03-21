@@ -1,38 +1,44 @@
 package com.microservices.OrderService.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
 @Entity
-@Log4j2
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ORDER_DETAILS")
 @Builder
+@Table(
+    name = "ORDER_DETAILS",
+    indexes = {
+        @Index(name = "idx_product_id", columnList = "PRODUCT_ID"),
+        @Index(name = "idx_order_date", columnList = "ORDER_DATE")
+    }
+)
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "PRODUCT_ID")
+    @Column(name = "PRODUCT_ID", nullable = false)
     private Long productId;
 
-    @Column(name = "QUANTITY")
+    @Column(name = "QUANTITY", nullable = false)
     private Long quantity;
 
-    @Column(name = "AMOUNT")
+    @Column(name = "AMOUNT", nullable = false)
     private Long amount;
 
-    @Column(name = "ORDER_STATUS")
-    private String orderStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ORDER_STATUS", nullable = false)
+    private OrderStatus orderStatus;
 
-    @Column(name = "ORDER_DATE")
-    private Instant orderDate ;
+    @CreationTimestamp
+    @Column(name = "ORDER_DATE", nullable = false, updatable = false)
+    private Instant orderDate;
 }
